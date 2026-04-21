@@ -18,8 +18,8 @@ function Letters({ words, baseDelay = 0 }: { words: string[]; baseDelay?: number
             return (
               <motion.span
                 key={`${ch}-${i}`}
-                initial={{ y: '110%', opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
+                initial={{ y: '110%' }}
+                animate={{ y: 0 }}
                 transition={{
                   duration: 0.6,
                   ease: [0.22, 1, 0.36, 1],
@@ -111,7 +111,7 @@ export function Hero() {
 
           <h1 className="mt-8 font-display text-5xl font-semibold leading-[1.02] tracking-tight text-ink-900 md:text-7xl lg:text-[96px]">
             <motion.span
-              variants={{ hidden: { opacity: 0, y: 18 }, visible: { opacity: 1, y: 0 } }}
+              variants={{ hidden: { y: 18 }, visible: { y: 0 } }}
               transition={{ duration: 0.6 }}
               className="block text-ink-500"
             >

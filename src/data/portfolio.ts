@@ -11,12 +11,18 @@ export interface ExperienceItem {
   bullets: string[]
 }
 
+export type ProjectStatus = 'shipped' | 'research' | 'personal' | 'coursework'
+
 export interface ProjectItem {
   title: string
   subtitle?: string
   tags: string[]
   description: string
   highlights: string[]
+  year?: string
+  status?: ProjectStatus
+  repo?: string
+  demo?: string
 }
 
 export interface EducationItem {
@@ -45,8 +51,8 @@ export const profile = {
   location: 'Chicago, USA',
   email: 'nahidshams65@gmail.com',
   phone: '(872) 346-0872',
-  linkedin: 'https://www.linkedin.com/',
-  github: 'https://github.com/',
+  linkedin: 'https://www.linkedin.com/in/nahid5/',
+  github: 'https://github.com/shamsnahidk',
   resume: '/resume.pdf',
   yearsExperience: '2+',
 }
@@ -142,6 +148,7 @@ export const projects: ProjectItem[] = [
       'Custom indexing layer with multithreaded query execution',
       'Designed for horizontal extensibility and clean service boundaries',
     ],
+    status: 'coursework',
   },
   {
     title: 'Learning Modules Platform',
@@ -154,6 +161,8 @@ export const projects: ProjectItem[] = [
       'Legacy refactor that improved performance and readability',
       'Disciplined unit testing and iterative delivery',
     ],
+    year: '2023–2025',
+    status: 'shipped',
   },
   {
     title: 'Puzzle Solver',
@@ -166,6 +175,7 @@ export const projects: ProjectItem[] = [
       'Trained on Places365 with strong SSIM and PSNR metrics',
       'Custom loss functions and full evaluation pipeline',
     ],
+    status: 'research',
   },
   {
     title: 'Face Swapping & Morphing System',
@@ -178,6 +188,7 @@ export const projects: ProjectItem[] = [
       'Pixel-level blending and morphing without external dependencies',
       'Strong foundation in algorithms and numerical computation',
     ],
+    status: 'personal',
   },
 ]
 
@@ -207,9 +218,10 @@ export const navLinks = [
   { href: '#skills', label: 'Skills' },
   { href: '#experience', label: 'Experience' },
   { href: '#projects', label: 'Projects' },
+  { href: '#code', label: 'Code' },
   { href: '#education', label: 'Education' },
   { href: '#contact', label: 'Contact' },
 ]
 
-export const sectionIds = ['top', 'about', 'skills', 'experience', 'projects', 'education', 'contact'] as const
+export const sectionIds = ['top', 'about', 'skills', 'experience', 'projects', 'code', 'education', 'contact'] as const
 export type SectionId = (typeof sectionIds)[number]

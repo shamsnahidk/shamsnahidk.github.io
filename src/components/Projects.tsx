@@ -1,11 +1,19 @@
 import { useRef } from 'react'
 import type { MouseEvent } from 'react'
 import { motion, useMotionValue, useScroll, useSpring, useTransform } from 'framer-motion'
-import { ArrowUpRight } from 'lucide-react'
+import { ArrowUpRight, ExternalLink } from 'lucide-react'
+import { GithubIcon } from './icons/Brand'
 import { SectionHeader } from './SectionHeader'
 import { fadeUp, viewportOnce } from '../lib/motion'
 import { projects } from '../data/portfolio'
-import type { ProjectItem } from '../data/portfolio'
+import type { ProjectItem, ProjectStatus } from '../data/portfolio'
+
+const statusLabel: Record<ProjectStatus, string> = {
+  shipped: 'Shipped',
+  research: 'Research',
+  personal: 'Personal',
+  coursework: 'Coursework',
+}
 
 function ProjectCard({ project, index }: { project: ProjectItem; index: number }) {
   const x = useMotionValue(0)
@@ -33,17 +41,54 @@ function ProjectCard({ project, index }: { project: ProjectItem; index: number }
       className="group relative overflow-hidden rounded-3xl border border-ink-200 bg-white p-8 transition-colors hover:border-ink-900/30"
     >
       <div className="flex items-start justify-between">
-        <span className="font-mono text-xs uppercase tracking-[0.2em] text-ink-400">
-          {String(index + 1).padStart(2, '0')} / {String(projects.length).padStart(2, '0')}
-        </span>
-        <motion.span
-          whileHover={{ x: 2, y: -2, rotate: 12 }}
-          transition={{ type: 'spring', stiffness: 260, damping: 20 }}
-          className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-ink-200 text-ink-700 transition-colors group-hover:border-accent group-hover:text-accent"
-          aria-hidden
-        >
-          <ArrowUpRight size={18} />
-        </motion.span>
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="font-mono text-xs uppercase tracking-[0.2em] text-ink-400">
+            {String(index + 1).padStart(2, '0')} / {String(projects.length).padStart(2, '0')}
+          </span>
+          {project.status && (
+            <span className="rounded-full border border-ink-200 bg-ink-50 px-2 py-0.5 font-mono text-[10px] uppercase tracking-[0.18em] text-ink-700">
+              {statusLabel[project.status]}
+            </span>
+          )}
+          {project.year && (
+            <span className="font-mono text-[11px] text-ink-400">{project.year}</span>
+          )}
+        </div>
+        {(project.repo || project.demo) ? (
+          <div className="flex items-center gap-2">
+            {project.repo && (
+              <a
+                href={project.repo}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={`${project.title} — source code`}
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-ink-200 text-ink-700 transition-colors hover:border-accent hover:text-accent"
+              >
+                <GithubIcon className="h-4 w-4" />
+              </a>
+            )}
+            {project.demo && (
+              <a
+                href={project.demo}
+                target="_blank"
+                rel="noreferrer"
+                aria-label={`${project.title} — live demo`}
+                className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-ink-200 text-ink-700 transition-colors hover:border-accent hover:text-accent"
+              >
+                <ExternalLink size={16} />
+              </a>
+            )}
+          </div>
+        ) : (
+          <motion.span
+            whileHover={{ x: 2, y: -2, rotate: 12 }}
+            transition={{ type: 'spring', stiffness: 260, damping: 20 }}
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-ink-200 text-ink-700 transition-colors group-hover:border-accent group-hover:text-accent"
+            aria-hidden
+          >
+            <ArrowUpRight size={18} />
+          </motion.span>
+        )}
       </div>
 
       <h3 className="mt-8 text-2xl font-semibold text-ink-900 md:text-3xl">{project.title}</h3>
@@ -102,7 +147,7 @@ export function Projects() {
         <SectionHeader
           eyebrow="Selected Work"
           title="Projects at the edge of systems and product."
-          description="A curated look at distributed systems, backend platforms, and research work."
+          description="Four projects across distributed systems, production backend, and from-scratch ML — each one shipped to a real audience or trained against a real benchmark."
         />
 
         <motion.div
