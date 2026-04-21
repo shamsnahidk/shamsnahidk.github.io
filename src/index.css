@@ -23,6 +23,14 @@
   h1, h2, h3, h4, h5, h6 {
     @apply font-display tracking-tight text-ink-900;
   }
+
+  /* Consistent focus indicator for keyboard users across all interactive elements.
+     Browsers honor the element's own border-radius on outline. Components that
+     supply their own focus ring (e.g. .btn-primary) override this in the components layer. */
+  :focus-visible {
+    outline: 2px solid theme('colors.accent.DEFAULT');
+    outline-offset: 2px;
+  }
 }
 
 @layer components {
@@ -76,4 +84,47 @@
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* Print: strip ambient chrome, keep content readable on paper.
+   Recruiters do print portfolios — give them clean black-on-white with
+   inlined link URLs so the print is self-referential. */
+@media print {
+  html, body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+  /* Hide ambient/decorative chrome */
+  header,
+  nav,
+  [aria-hidden="true"],
+  .group-hover\:opacity-100,
+  button[aria-label="Open menu"],
+  button[aria-label="Close menu"] {
+    display: none !important;
+  }
+  /* Reveal collapsed/animation-hidden content */
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+    filter: none !important;
+    box-shadow: none !important;
+  }
+  /* Print URLs after meaningful links so the paper version is referential */
+  a[href^="http"]:after,
+  a[href^="mailto:"]:after {
+    content: " (" attr(href) ")";
+    font-size: 0.85em;
+    color: #475569;
+    word-break: break-all;
+  }
+  /* Don't print the URL after the home anchor links — they're internal */
+  a[href^="#"]:after { content: "" !important; }
+  /* Avoid breaking cards/sections across pages awkwardly */
+  section, article, li { page-break-inside: avoid; }
+  h1, h2, h3 { page-break-after: avoid; }
 }

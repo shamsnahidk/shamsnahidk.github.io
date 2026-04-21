@@ -41,11 +41,19 @@ Phase 3 added schema fields (`year`, `status`, `repo`, `demo`) to `ProjectItem`.
 - [NEEDS COPY: Do you publish anywhere — dev.to, Medium, personal blog? If so, RSS/Atom URL.] — Writing section deferred until this is provided; adding a stub would violate the "no stub components" rule.
 
 ## Contact (Phase 7)
-- [NEEDS DECISION: Keep mailto-only contact, or add a form (Formspree/Web3Forms/Resend)?]
-- [NEEDS DECISION: Show phone number publicly, or gate behind a click?]
+- ✅ **Decision: stay with mailto.** GitHub Pages is a static host (no server runtime), so a "real" form would require a third-party endpoint (Formspree, Web3Forms, Resend) — all add an external dependency, a privacy surface, and rate-limit risk for a personal portfolio with four already-working channels (Email, Phone, LinkedIn, GitHub). Mailto + the new "Copy email" button covers the ergonomic gap (one click for mail clients, one click for "I'll paste this somewhere").
+- [NEEDS DECISION: If volume becomes a problem and you want a real form later, Formspree's free tier (50 submissions/mo) is the lightest add — one POST endpoint, zero JS dep.]
+- [NEEDS DECISION: Show phone number publicly, or gate behind a click? Currently shown openly in `data/portfolio.ts` — fine for job-search visibility, swap to a click-to-reveal if it gets spam-called.]
 
 ## Analytics / consent (Phase 7)
-- [NEEDS DECISION: Privacy-friendly analytics? Recommended: Plausible (paid) or Umami self-hosted. No GA without consent banner.]
+- ✅ **Architecture shipped: privacy-first env-gated loader** in `src/components/Analytics.tsx`.
+  - Renders **nothing** if neither `VITE_PLAUSIBLE_DOMAIN` nor `VITE_GOATCOUNTER_CODE` is set at build time (current state — zero analytics bytes shipped).
+  - When set, renders the appropriate `<script>` tag. Both Plausible and GoatCounter are cookieless, GDPR/CCPA-clean, and respect Do Not Track internally — no consent banner needed.
+- [NEEDS DECISION: pick a provider when ready —
+  - **Plausible** (~$9/mo): zero-config dashboard, hosted, the polished default. Set `VITE_PLAUSIBLE_DOMAIN=shamsnahidk.github.io` in the GH Actions workflow during Phase 9.
+  - **GoatCounter** (free under 100k pageviews/mo): same privacy posture, scrappier dashboard. Sign up, get your subdomain code, set `VITE_GOATCOUNTER_CODE=<code>` in the workflow.
+  - **No analytics**: also a defensible choice for a portfolio. Just leave both env vars unset and the component is a no-op.]
+- ❌ **Google Analytics is not on the table** — would force a consent banner everywhere outside the US, and the cookies it sets cross-site identifiers.
 
 ## Accessibility / brand (Phase 6)
 - [NEEDS COPY: Alt text for headshot once provided.]

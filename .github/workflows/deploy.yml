@@ -1,7 +1,11 @@
-name: Deploy to GitHub Pages
+name: CI / Deploy
 
+# Runs on every push/PR to main. The `quality` job always runs.
+# The `deploy` job only runs on pushes to main — PR validation stays on CI gates.
 on:
   push:
+    branches: [main]
+  pull_request:
     branches: [main]
   workflow_dispatch:
 
@@ -11,12 +15,24 @@ permissions:
   id-token: write
 
 concurrency:
-  group: pages
+  group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  build:
+  quality:
+    name: Quality gates + build
     runs-on: ubuntu-latest
+    env:
+      # The GitHub fetch script (scripts/fetch-github.mjs) reads GITHUB_TOKEN/GH_TOKEN.
+      # Using the workflow-injected GITHUB_TOKEN raises the API quota from the
+      # shared 60/hr on Actions runners to 5000/hr — avoids spurious prebuild
+      # failures when another runner on the same IP has also been calling the API.
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # Analytics — unset by default so <Analytics /> renders nothing.
+      # To turn on: Repository Settings → Secrets and variables → Actions → Variables
+      # and add VITE_PLAUSIBLE_DOMAIN or VITE_GOATCOUNTER_CODE.
+      VITE_PLAUSIBLE_DOMAIN: ${{ vars.VITE_PLAUSIBLE_DOMAIN }}
+      VITE_GOATCOUNTER_CODE: ${{ vars.VITE_GOATCOUNTER_CODE }}
     steps:
       - uses: actions/checkout@v4
 
@@ -29,16 +45,25 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build
+      - name: Lint
+        run: npm run lint
+
+      - name: Build (typecheck + vite + prerender)
         run: npm run build
 
+      - name: Verify build output
+        run: npm run verify
+
       - name: Upload Pages artifact
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         uses: actions/upload-pages-artifact@v3
         with:
           path: dist
 
   deploy:
-    needs: build
+    name: Deploy to GitHub Pages
+    needs: quality
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     runs-on: ubuntu-latest
     environment:
       name: github-pages

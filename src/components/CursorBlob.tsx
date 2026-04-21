@@ -1,26 +1,47 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useSyncExternalStore } from 'react'
 import { motion, useMotionValue, useSpring } from 'framer-motion'
 
+const FINE_POINTER = '(pointer: fine)'
+const REDUCED_MOTION = '(prefers-reduced-motion: reduce)'
+
+function subscribeMediaQueries(callback: () => void): () => void {
+  const finePointer = window.matchMedia(FINE_POINTER)
+  const reduce = window.matchMedia(REDUCED_MOTION)
+  finePointer.addEventListener('change', callback)
+  reduce.addEventListener('change', callback)
+  return () => {
+    finePointer.removeEventListener('change', callback)
+    reduce.removeEventListener('change', callback)
+  }
+}
+
+function getCursorBlobEnabled(): boolean {
+  return (
+    window.matchMedia(FINE_POINTER).matches &&
+    !window.matchMedia(REDUCED_MOTION).matches
+  )
+}
+
 export function CursorBlob() {
-  const [enabled, setEnabled] = useState(false)
+  const enabled = useSyncExternalStore(
+    subscribeMediaQueries,
+    getCursorBlobEnabled,
+    () => false,
+  )
   const x = useMotionValue(-200)
   const y = useMotionValue(-200)
   const sx = useSpring(x, { stiffness: 220, damping: 28, mass: 0.4 })
   const sy = useSpring(y, { stiffness: 220, damping: 28, mass: 0.4 })
 
   useEffect(() => {
-    const isFinePointer = window.matchMedia('(pointer: fine)').matches
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (!isFinePointer || reduce) return
-    setEnabled(true)
-
+    if (!enabled) return
     const move = (e: MouseEvent) => {
       x.set(e.clientX)
       y.set(e.clientY)
     }
     window.addEventListener('mousemove', move, { passive: true })
     return () => window.removeEventListener('mousemove', move)
-  }, [x, y])
+  }, [enabled, x, y])
 
   if (!enabled) return null
 

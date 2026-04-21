@@ -1,6 +1,7 @@
+import { useEffect, useState } from 'react'
 import type { ComponentType, SVGProps } from 'react'
 import { motion } from 'framer-motion'
-import { Mail, Phone, ArrowUpRight } from 'lucide-react'
+import { Mail, Phone, ArrowUpRight, Copy, Check } from 'lucide-react'
 import { fadeUp, viewportOnce } from '../lib/motion'
 import { profile } from '../data/portfolio'
 import { MagneticButton } from './MagneticButton'
@@ -11,6 +12,53 @@ interface Channel {
   label: string
   value: string
   href: string
+}
+
+function CopyEmailButton({ email }: { email: string }) {
+  const [copied, setCopied] = useState(false)
+  const [hidden, setHidden] = useState(false)
+
+  useEffect(() => {
+    if (!copied) return
+    const t = setTimeout(() => setCopied(false), 2000)
+    return () => clearTimeout(t)
+  }, [copied])
+
+  const handleClick = async () => {
+    try {
+      if (!navigator.clipboard) throw new Error('clipboard unsupported')
+      await navigator.clipboard.writeText(email)
+      setCopied(true)
+    } catch {
+      setHidden(true)
+    }
+  }
+
+  if (hidden) return null
+
+  return (
+    <>
+      <button
+        type="button"
+        onClick={handleClick}
+        aria-label={copied ? 'Email copied to clipboard' : `Copy email address ${email}`}
+        className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2.5 text-sm font-medium text-white transition-colors hover:border-white/30 hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-ink-900"
+      >
+        {copied ? (
+          <>
+            <Check size={16} aria-hidden /> Copied
+          </>
+        ) : (
+          <>
+            <Copy size={16} aria-hidden /> Copy email
+          </>
+        )}
+      </button>
+      <span role="status" aria-live="polite" className="sr-only">
+        {copied ? 'Email copied to clipboard' : ''}
+      </span>
+    </>
+  )
 }
 
 const channels: Channel[] = [
@@ -78,7 +126,7 @@ export function Contact() {
                 key={c.label}
                 href={c.href}
                 target={c.href.startsWith('http') ? '_blank' : undefined}
-                rel={c.href.startsWith('http') ? 'noreferrer' : undefined}
+                rel={c.href.startsWith('http') ? 'noopener noreferrer' : undefined}
                 whileHover={{ y: -2 }}
                 transition={{ type: 'spring', stiffness: 300, damping: 22 }}
                 className="group flex items-center justify-between rounded-2xl border border-white/10 bg-white/[0.03] p-5 backdrop-blur-sm transition-colors hover:border-white/30 hover:bg-white/[0.07]"
@@ -107,6 +155,7 @@ export function Contact() {
             >
               <Mail size={16} /> {profile.email}
             </MagneticButton>
+            <CopyEmailButton email={profile.email} />
             <span className="text-sm text-ink-400">Replies within 24 hours.</span>
           </motion.div>
         </motion.div>

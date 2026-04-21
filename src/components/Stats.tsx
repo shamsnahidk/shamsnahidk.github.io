@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
-import { motion, useInView, animate } from 'framer-motion'
+import { motion, useInView, useReducedMotion, animate } from 'framer-motion'
 import { fadeUp, viewportOnce } from '../lib/motion'
 import { stats } from '../data/portfolio'
 
 function Counter({ to, suffix = '' }: { to: number; suffix?: string }) {
+  const reduce = useReducedMotion()
   const [value, setValue] = useState(0)
   const ref = useRef<HTMLSpanElement>(null)
   const inView = useInView(ref, { once: true, amount: 0.5 })
@@ -11,12 +12,12 @@ function Counter({ to, suffix = '' }: { to: number; suffix?: string }) {
   useEffect(() => {
     if (!inView) return
     const controls = animate(0, to, {
-      duration: 1.6,
+      duration: reduce ? 0 : 1.6,
       ease: [0.22, 1, 0.36, 1],
       onUpdate: (v) => setValue(Math.round(v)),
     })
     return () => controls.stop()
-  }, [inView, to])
+  }, [inView, to, reduce])
 
   return (
     <span ref={ref}>

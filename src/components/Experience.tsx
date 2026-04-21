@@ -63,7 +63,7 @@ export function Experience() {
                   <div className="flex flex-wrap items-baseline justify-between gap-2">
                     <h3 className="text-xl font-semibold text-ink-900 md:text-2xl">
                       {job.role}
-                      <span className="ml-2 text-ink-400">·</span>
+                      <span className="ml-2 text-ink-500">·</span>
                       <span className="ml-2 text-ink-700">{job.company}</span>
                     </h3>
                     <span className="font-mono text-xs uppercase tracking-[0.16em] text-ink-500">{job.period}</span>

@@ -42,7 +42,7 @@ function ProjectCard({ project, index }: { project: ProjectItem; index: number }
     >
       <div className="flex items-start justify-between">
         <div className="flex flex-wrap items-center gap-2">
-          <span className="font-mono text-xs uppercase tracking-[0.2em] text-ink-400">
+          <span className="font-mono text-xs uppercase tracking-[0.2em] text-ink-500">
             {String(index + 1).padStart(2, '0')} / {String(projects.length).padStart(2, '0')}
           </span>
           {project.status && (
@@ -51,7 +51,7 @@ function ProjectCard({ project, index }: { project: ProjectItem; index: number }
             </span>
           )}
           {project.year && (
-            <span className="font-mono text-[11px] text-ink-400">{project.year}</span>
+            <span className="font-mono text-[11px] text-ink-500">{project.year}</span>
           )}
         </div>
         {(project.repo || project.demo) ? (
@@ -60,7 +60,7 @@ function ProjectCard({ project, index }: { project: ProjectItem; index: number }
               <a
                 href={project.repo}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 aria-label={`${project.title} — source code`}
                 className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-ink-200 text-ink-700 transition-colors hover:border-accent hover:text-accent"
               >
@@ -71,7 +71,7 @@ function ProjectCard({ project, index }: { project: ProjectItem; index: number }
               <a
                 href={project.demo}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 aria-label={`${project.title} — live demo`}
                 className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-ink-200 text-ink-700 transition-colors hover:border-accent hover:text-accent"
               >

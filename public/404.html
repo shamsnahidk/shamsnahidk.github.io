@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>404 — Page not found · Shams Nahid K</title>
+    <meta name="description" content="The page you were looking for isn't here. Head back to the portfolio home." />
+    <meta name="robots" content="noindex, follow" />
+    <link rel="canonical" href="https://shamsnahidk.github.io/" />
+    <meta name="theme-color" content="#0F172A" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180.png" />
+    <style>
+      *, *::before, *::after { box-sizing: border-box; }
+      html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+      body {
+        margin: 0;
+        min-height: 100dvh;
+        display: grid;
+        place-items: center;
+        padding: 4rem 1.5rem;
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        color: #1E293B;
+        background-color: #F8FAFC;
+        background-image:
+          radial-gradient(circle at 20% 0%, rgba(96, 165, 250, 0.08) 0%, transparent 40%),
+          radial-gradient(circle at 80% 100%, rgba(249, 115, 22, 0.05) 0%, transparent 40%);
+      }
+      main { width: 100%; max-width: 36rem; text-align: center; }
+      .badge {
+        display: inline-block;
+        margin-bottom: 1.25rem;
+        padding: 0.4rem 0.9rem;
+        border: 1px solid #E2E8F0;
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(8px);
+        border-radius: 999px;
+        font-family: ui-monospace, "SF Mono", Menlo, Monaco, Consolas, monospace;
+        font-size: 0.7rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: #475569;
+      }
+      h1 {
+        margin: 0;
+        font-family: "Archivo", system-ui, sans-serif;
+        font-weight: 600;
+        font-size: clamp(2.25rem, 4.5vw + 1rem, 4.5rem);
+        line-height: 1.05;
+        letter-spacing: -0.02em;
+        color: #0F172A;
+      }
+      .accent { color: #F97316; }
+      p.lead {
+        margin: 1.25rem auto 0;
+        max-width: 30rem;
+        font-size: 1.05rem;
+        line-height: 1.6;
+        color: #475569;
+      }
+      .actions {
+        margin-top: 2.25rem;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.75rem;
+      }
+      a {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.85rem 1.5rem;
+        border-radius: 999px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        text-decoration: none;
+        transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+      }
+      a.primary { background-color: #0F172A; color: #ffffff; }
+      a.primary:hover, a.primary:focus-visible { background-color: #F97316; }
+      a.ghost { border: 1px solid #CBD5E1; color: #1E293B; }
+      a.ghost:hover, a.ghost:focus-visible { border-color: #0F172A; background-color: #ffffff; }
+      a:focus-visible { outline: 2px solid #F97316; outline-offset: 2px; }
+      .arrow { font-size: 1rem; }
+      .return {
+        margin-top: 2rem;
+        font-family: ui-monospace, "SF Mono", Menlo, Monaco, Consolas, monospace;
+        font-size: 0.7rem;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+        color: #94A3B8;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <span class="badge">Error 404</span>
+      <h1>This page is <span class="accent">somewhere else</span>.</h1>
+      <p class="lead">
+        The link you followed is either out of date or never existed. The portfolio is a single page —
+        head back to the start and pick a section from there.
+      </p>
+      <div class="actions">
+        <a class="primary" href="/">
+          Back to home
+          <span class="arrow" aria-hidden="true">&rarr;</span>
+        </a>
+        <a class="ghost" href="mailto:nahidshams65@gmail.com">Email me directly</a>
+      </div>
+      <p class="return">shamsnahidk.github.io</p>
+    </main>
+  </body>
+</html>

@@ -22,7 +22,7 @@ export interface GithubData {
 export const githubData: GithubData = {
   username: `shamsnahidk`,
   profileUrl: `https://github.com/shamsnahidk`,
-  fetchedAt: `2026-04-21T04:52:20.858Z`,
+  fetchedAt: `2026-04-21T05:36:10.423Z`,
   repos: [
     {
       name: `shamsnahidk.github.io`,
@@ -32,7 +32,7 @@ export const githubData: GithubData = {
       stars: 0,
       forks: 0,
       topics: [],
-      pushedAt: `2026-04-21T01:19:49Z`,
+      pushedAt: `2026-04-21T04:57:15Z`,
     },
     {
       name: `legal-rag-assistant`,

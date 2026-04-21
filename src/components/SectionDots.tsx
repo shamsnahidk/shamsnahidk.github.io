@@ -50,12 +50,13 @@ export function SectionDots() {
               <a
                 href={`#${id}`}
                 aria-label={labels[id]}
+                aria-current={isActive ? 'location' : undefined}
                 className="flex items-center justify-end gap-3 py-1"
               >
                 <span
                   className={[
                     'font-mono text-[10px] uppercase tracking-[0.2em] transition-all duration-300',
-                    isActive ? 'text-ink-900 opacity-100' : 'text-ink-400 opacity-0 group-hover:opacity-100',
+                    isActive ? 'text-ink-900 opacity-100' : 'text-ink-500 opacity-0 group-hover:opacity-100',
                   ].join(' ')}
                 >
                   {labels[id]}

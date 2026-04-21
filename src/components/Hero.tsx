@@ -184,12 +184,12 @@ export function Hero() {
             </span>
             <span className="inline-flex items-center gap-2">
               <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75 motion-reduce:animate-none" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
               </span>
               Open to opportunities
             </span>
-            <span className="font-mono text-xs uppercase tracking-[0.18em] text-ink-400">
+            <span className="font-mono text-xs uppercase tracking-[0.18em] text-ink-500">
               {profile.yearsExperience} years experience
             </span>
           </motion.div>
@@ -201,7 +201,7 @@ export function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 2.4, duration: 0.6 }}
-            className="mt-20 flex items-center gap-3 text-xs font-mono uppercase tracking-[0.22em] text-ink-400"
+            className="mt-20 flex items-center gap-3 text-xs font-mono uppercase tracking-[0.22em] text-ink-500"
           >
             <span>Scroll</span>
             <motion.span

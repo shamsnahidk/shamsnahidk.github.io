@@ -12,10 +12,13 @@ import '@fontsource/jetbrains-mono/400.css'
 
 import './index.css'
 import App from './App.tsx'
+import { ErrorBoundary } from './components/ErrorBoundary.tsx'
 
 hydrateRoot(
   document.getElementById('root')!,
   <StrictMode>
-    <App />
+    <ErrorBoundary>
+      <App />
+    </ErrorBoundary>
   </StrictMode>,
 )

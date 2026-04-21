@@ -44,7 +44,7 @@ function RepoCard({ repo, index, total }: { repo: GithubRepo; index: number; tot
       variants={fadeUp}
       href={repo.url}
       target="_blank"
-      rel="noreferrer"
+      rel="noopener noreferrer"
       whileHover={{ y: -3 }}
       transition={{ type: 'spring', stiffness: 260, damping: 22 }}
       className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-ink-200 bg-white p-6 transition-colors hover:border-ink-900/30"
@@ -54,13 +54,13 @@ function RepoCard({ repo, index, total }: { repo: GithubRepo; index: number; tot
           <span className="grid h-9 w-9 place-items-center rounded-lg border border-ink-200 bg-ink-50 text-ink-700">
             <GithubIcon className="h-4 w-4" />
           </span>
-          <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-400">
+          <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-500">
             {String(index + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
           </span>
         </div>
         <ArrowUpRight
           size={16}
-          className="text-ink-400 transition-all duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent"
+          className="text-ink-500 transition-all duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent"
         />
       </div>
 
@@ -68,7 +68,7 @@ function RepoCard({ repo, index, total }: { repo: GithubRepo; index: number; tot
       {repo.description ? (
         <p className="mt-2 text-sm leading-relaxed text-ink-600">{repo.description}</p>
       ) : (
-        <p className="mt-2 text-sm italic text-ink-400">No description.</p>
+        <p className="mt-2 text-sm italic text-ink-500">No description.</p>
       )}
 
       {repo.topics.length > 0 && (
@@ -105,7 +105,7 @@ function RepoCard({ repo, index, total }: { repo: GithubRepo; index: number; tot
             <GitFork size={12} aria-hidden /> {repo.forks}
           </span>
         )}
-        <span className="ml-auto font-mono text-[10px] uppercase tracking-[0.16em] text-ink-400">
+        <span className="ml-auto font-mono text-[10px] uppercase tracking-[0.16em] text-ink-500">
           {formatRelative(repo.pushedAt)}
         </span>
       </div>
@@ -151,7 +151,7 @@ export function GitHub() {
           <a
             href={githubData.profileUrl}
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             className="group inline-flex items-center gap-2 font-medium text-ink-900 transition-colors hover:text-accent"
           >
             <GithubIcon className="h-4 w-4" />
@@ -162,7 +162,7 @@ export function GitHub() {
             />
           </a>
           {fetchedLabel && (
-            <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-400">
+            <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-500">
               Synced {fetchedLabel}
             </span>
           )}

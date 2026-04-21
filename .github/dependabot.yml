@@ -1,0 +1,41 @@
+version: 2
+
+# Auto-open PRs for dependency and workflow updates so the portfolio doesn't
+# silently rot. PRs run through the same CI gates as anything else, so a
+# breaking bump fails loudly instead of merging itself.
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+      time: "06:00"
+      timezone: America/Chicago
+    open-pull-requests-limit: 5
+    versioning-strategy: increase
+    groups:
+      # Group all non-major bumps so I'm not staring at 12 PRs every Monday
+      minor-and-patch:
+        update-types:
+          - minor
+          - patch
+    labels:
+      - dependencies
+    commit-message:
+      prefix: chore(deps)
+      include: scope
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+      day: monday
+      time: "06:00"
+      timezone: America/Chicago
+    open-pull-requests-limit: 3
+    labels:
+      - dependencies
+      - github-actions
+    commit-message:
+      prefix: chore(actions)
+      include: scope

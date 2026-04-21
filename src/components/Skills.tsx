@@ -33,7 +33,7 @@ export function Skills() {
             >
               <div className="mb-5 flex items-baseline justify-between">
                 <h3 className="text-base font-semibold text-ink-900">{group.category}</h3>
-                <span className="font-mono text-xs text-ink-400">
+                <span className="font-mono text-xs text-ink-500">
                   {String(gi + 1).padStart(2, '0')} · {String(group.items.length).padStart(2, '0')}
                 </span>
               </div>
